@@ -5,25 +5,25 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: pgorner <pgorner@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/11/02 17:35:29 by pgorner           #+#    #+#             */
-/*   Updated: 2022/11/16 15:49:58 by pgorner          ###   ########.fr       */
+/*   Created: 2022/12/06 16:14:49 by pgorner           #+#    #+#             */
+/*   Updated: 2022/12/07 15:30:51 by pgorner          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 
 #include "get_next_line.h"
 #include "stdio.h"
 
-
-char *ft_next(char *buf)
+char	*ft_next(char *buf)
 {
-	int i;
-	int j;
-	char *res;
+	int		i;
+	int		j;
+	char	*res;
 
 	i = 0;
 	while (buf[i] && buf[i] != '\n')
 		++i;
-	if (!buf[i ])
+	if (!buf[i])
 	{
 		free(buf);
 		return (NULL);
@@ -36,10 +36,10 @@ char *ft_next(char *buf)
 	while (buf[i] != '\0')
 		res[j++] = buf[i++];
 	free(buf);
-	return(res);
+	return (res);
 }
 
-char *ft_line (char *buf)
+char	*ft_line(char *buf)
 {
 	char	*res;
 	size_t	i;
@@ -59,15 +59,15 @@ char *ft_line (char *buf)
 		++i;
 	}
 	if (buf[i] == '\n')
-		res[i] = '\n'; //++
+		res[i] = '\n';
 	buf = res;
-	return(buf);
+	return (buf);
 }
 
 char	*ft_read(int fd, char *buf)
 {
-	char 	*str;
-	int 	byte;
+	char	*str;
+	int		byte;
 
 	if (!buf)
 		buf = ft_calloc(1, 1);
@@ -83,39 +83,15 @@ char	*ft_read(int fd, char *buf)
 			return (free(buf), free(str), NULL);
 		buf = ft_strjoin(buf, str);
 		if (ft_strchr(buf, '\n'))
-			break;
+			break ;
 	}
 	return (free(str), buf);
 }
-/*
-char	*ft_read(int fd, char *buf)
-{
-	char 	*str;
-	int 	byte;
 
-	if (!buf)
-		buf = ft_calloc(1, 1);
-	if (!buf)
-		return (NULL);
-	str = ft_calloc(BUFFER_SIZE + 1, sizeof(char));
-	byte = 1;
-	while (byte >= 1)
-	{
-		byte = read(fd, str, BUFFER_SIZE);
-		if (byte == -1)
-			return (free(buf), free(str), NULL);
-		buf = ft_strjoin(buf, str);
-		if (ft_strchr(buf, '\n'))
-			break;
-	}
-	return (free(str), buf);
-}
-*/
-
-char *get_next_line(int fd)
+char	*get_next_line(int fd)
 {
-	char *line;
-	static char *buf;
+	char		*line;
+	static char	*buf;
 
 	if (fd < 0 || BUFFER_SIZE <= 0)
 		return (NULL);
@@ -124,6 +100,5 @@ char *get_next_line(int fd)
 		return (NULL);
 	line = ft_line(buf);
 	buf = ft_next(buf);
-	return(line);
+	return (line);
 }
-
